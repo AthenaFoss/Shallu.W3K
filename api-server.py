@@ -55,26 +55,12 @@ def add_database_entry(entry: DatabaseEntry):
     
 def add_to_master_db(question, answer):
     conn = sqlite3.connect("databases/master/master.db")
-    create_table_if_not_exists(conn)
-
     entry_id = str(uuid.uuid4())
     cursor = conn.cursor()
     cursor.execute("INSERT INTO question_answer_pairs (id, question, answer) VALUES (?, ?, ?)", (entry_id, question, answer))
     conn.commit()
     conn.close()
-
     return entry_id
-
-def create_table_if_not_exists(conn):
-    cursor = conn.cursor()
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS question_answer_pairs (
-            id TEXT PRIMARY KEY,
-            question TEXT NOT NULL,
-            answer TEXT NOT NULL
-        )
-    """)
-    conn.commit()
 
 def update_downstream_dbs(question, answer, entry_id):
 

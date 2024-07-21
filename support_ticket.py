@@ -12,10 +12,6 @@ class SupportTicket(BaseModel):
 conn = sqlite3.connect('databases/support-ticket/support-ticket.db')
 cursor = conn.cursor()
 
-# Create the table if it doesn't exist
-cursor.execute('''CREATE TABLE IF NOT EXISTS support_tickets
-                  (id TEXT PRIMARY KEY, question TEXT)''')
-
 # Function to add a new support ticket
 def add_support_ticket(question: str) -> str:
     ticket_id = str(uuid4())
